@@ -12,7 +12,6 @@ const week = [
   "Jueves",
   "Viernes",
   "Sábado",
-  "Domingo",
 ];
 
 function nextDay(day) {
