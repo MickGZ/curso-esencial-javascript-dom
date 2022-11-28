@@ -31,21 +31,46 @@ export default function dragabble($element, config = defaultConfig) {
   $marker.addEventListener("pointercancel", handlePointerCancel);
   $marker.addEventListener("pointermove", handlePointerMove);
 
+  if (config.animatable) {
+    setAnimations();
+  }
+
   function handlePointerUp() {
     logger("Pointer UP");
+    dragEnd();
   }
 
   function handlePointerOut() {
     logger("Pointer OUT");
+    dragEnd();
   }
 
   function handlePointerCancel() {
     logger("Pointer Cancel");
+    dragEnd();
   }
 
   function handlePointerDown(event) {
     logger("Pointer Down");
     startDrag(event);
+  }
+
+  function setAnimations() {
+    $element.style.transition = "margin-bottom .3s";
+  }
+
+  // Determine if the user dragged more than half
+  function bounce() {
+    if (widgetPosition < ELEMENT_BLOCK_SIZE / 2) {
+      return open();
+    }
+    return close();
+  }
+
+  function dragEnd() {
+    logger("DRAG END");
+    isDragging = false;
+    bounce();
   }
 
   function handleClick(event) {
